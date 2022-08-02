@@ -1,5 +1,6 @@
 import * as express from 'express';
-import routers from './routers';
+import httpErrorMiddleware from './middlewares/http.error';
+import loginRouter from './routers/loginRouter';
 
 class App {
   public app: express.Express;
@@ -23,7 +24,8 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.app.use(routers);
+    this.app.use(loginRouter);
+    this.app.use(httpErrorMiddleware);
   }
 
   public start(PORT: string | number):void {
@@ -32,7 +34,5 @@ class App {
 }
 
 export { App };
-
-
 // A execução dos testes de cobertura depende dessa exportação
 export const { app } = new App();
