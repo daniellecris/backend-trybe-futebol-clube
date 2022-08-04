@@ -1,23 +1,19 @@
-import { SignOptions, sign, verify } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
+import IUser from '../interfaces/IUser';
 import HttpException from './HttpException';
 
-const SECRET = process.env.JWT_SECRET || 'senha_secreta';
+const SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
-const jwtDefaultConfig: SignOptions = {
+const jwtDefaultConfig: jwt.SignOptions = {
   expiresIn: '7d',
   algorithm: 'HS256',
 };
 
 class TokenGenerator {
-  constructor(private jwtConfig?: SignOptions) {
-    if (!jwtConfig) {
-      // eslint-disable-next-line no-param-reassign
-      jwtConfig = jwtDefaultConfig;
-    }
-  }
+  constructor(private jwtConfig: jwt.SignOptions = jwtDefaultConfig) {}
 
-  public async generateJWTToken(payload: object) {
-    return sign(payload, SECRET, this.jwtConfig);
+  public async generateJWTToken(payload: IUser) {
+    return jwt.sign(payload, SECRET, this.jwtConfig);
   }
 
   public async authenticateToken(token: string) {
@@ -26,7 +22,7 @@ class TokenGenerator {
     }
 
     try {
-      const introspection = await verify(token, SECRET, this.jwtConfig);
+      const introspection = await jwt.verify(token, SECRET, this.jwtConfig);
 
       return introspection;
     } catch (e) {

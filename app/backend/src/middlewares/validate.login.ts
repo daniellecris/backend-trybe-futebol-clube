@@ -17,7 +17,7 @@ const validateLogin = (req: Request, res: Response, next: NextFunction) => {
   }
 
   if (!password || password.length < 6) {
-    throw new HttpException(400, 'Password must be at least 6 characters');
+    throw new HttpException(400, 'All fields must be filled');
   }
   next();
 };
