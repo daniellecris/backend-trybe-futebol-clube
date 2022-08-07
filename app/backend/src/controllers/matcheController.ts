@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import HttpException from '../shared/HttpException';
 import MatcheService from '../services/matcheService';
+import TeamService from '../services/teamsService';
 
 class MatcheController {
   private service: MatcheService;
@@ -26,6 +27,15 @@ class MatcheController {
   }
 
   public async postController(req: Request, res: Response) {
+    const { homeTeam, awayTeam } = req.body;
+
+    const team = new TeamService();
+
+    const compareHome = await team.getById(homeTeam);
+    const compareAway = await team.getById(awayTeam);
+
+    console.log('TeamHome:', compareHome, 'TeamAway:', compareAway);
+
     const create = await this.service.postMatches(req.body);
     res.status(201).json(create);
   }
