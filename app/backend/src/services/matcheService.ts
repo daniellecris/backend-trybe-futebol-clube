@@ -23,6 +23,15 @@ class MatcheService {
     return update > 0;
   };
 
+  public patchServiceId = async (id:number, homeTeamGoals:number, awayTeamGoals:number) => {
+    const [update] = await Matche.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+
+    return update > 0;
+  };
+
   public postMatches = (matche: IMatche) => {
     const create = Matche.create({
       homeTeam: matche.homeTeam,

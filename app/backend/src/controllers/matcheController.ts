@@ -26,6 +26,19 @@ class MatcheController {
     }
   }
 
+  public async patchControllerId(req: Request<{ id: number }>, res: Response) {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+
+    const update = await this.service.patchServiceId(+id, homeTeamGoals, awayTeamGoals);
+
+    if (update === true) {
+      res.status(200).json({ message: 'updated goals' });
+    } else {
+      throw new HttpException(401, 'not updated goals');
+    }
+  }
+
   public async postController(req: Request, res: Response) {
     const { homeTeam, awayTeam } = req.body;
 

@@ -12,6 +12,9 @@ matcheRouter.get('/matches', (req: Request, res: Response) =>
 matcheRouter.patch('/matches/:id/finish', (req: Request<{ id: number }>, res: Response) =>
   matcheController.patchController(req, res));
 
+matcheRouter.patch('/matches/:id', (req: Request<{ id: number }>, res: Response) =>
+  matcheController.patchControllerId(req, res));
+
 matcheRouter.post('/matches', authMiddleware, (req: Request, res: Response) =>
   matcheController.postController(req, res));
 
