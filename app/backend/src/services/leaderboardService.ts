@@ -37,20 +37,14 @@ class LeaderboardService {
         newMatche.goalsOwn += matche.awayTeamGoals;
 
         if (matche.homeTeamGoals === matche.awayTeamGoals) {
-          // newMatche.goalsFavor += matche.homeTeamGoals;
-          // newMatche.goalsOwn += matche.awayTeamGoals;
           newMatche.totalDraws += 1;
         }
 
         if (matche.homeTeamGoals > matche.awayTeamGoals) {
           newMatche.totalVictories += 1;
-          // newMatche.goalsFavor += matche.homeTeamGoals;
-          // newMatche.goalsOwn += matche.awayTeamGoals;
         }
 
         if (matche.homeTeamGoals < matche.awayTeamGoals) {
-          // newMatche.goalsFavor += matche.homeTeamGoals;
-          // newMatche.goalsOwn += matche.awayTeamGoals;
           newMatche.totalLosses += 1;
         }
       }
@@ -64,7 +58,6 @@ class LeaderboardService {
   };
 
   static async leaderboard() {
-    // console.log('leader service');
     const teams = await this.getAllTeams();
     const result = await Promise.all(teams.map((item) => this.getPoints(item.id, item.teamName)));
 
